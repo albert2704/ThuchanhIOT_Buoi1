@@ -1,8 +1,16 @@
 # Thực hành Python với MQTT
 
+## 1. Thông tin sinh viên
+
+| Họ và tên | Mã sinh viên |
+| :--- | :---: |
+| Lê Đình Thức | B23DCCN803 |
+| Đỗ Minh Hoàng | B23DCCN328 |
+| Nguyễn Hoàng Quốc Việt | B22DCCN897 |
+
 Bộ mã nguồn cho ba bài thực hành: truyền thông điệp, giám sát cảm biến và điều khiển đèn thông minh. Họ tên, mã sinh viên và MQTT broker được cấu hình khi chạy; không cần sửa mã nguồn.
 
-## 1. Cài đặt
+## 2. Cài đặt
 
 Các chương trình MQTT dùng Python 3.9 trở lên và `paho-mqtt`. Broker Python cục bộ và kiểm thử cần Python 3.10 trở lên.
 
@@ -24,7 +32,7 @@ python -m pip install -r requirements-broker.txt
 
 Mỗi terminal mới cần kích hoạt `.venv`. Nếu đã có broker của lớp, chỉ cần cài `python -m pip install -r requirements.txt`.
 
-## 2. MQTT broker
+## 3. MQTT broker
 
 Mặc định tất cả chương trình kết nối `127.0.0.1:1883`, MQTT 3.1.1 qua TCP, không yêu cầu tài khoản. Chạy broker cục bộ trong một terminal riêng và giữ terminal này mở:
 
@@ -60,13 +68,13 @@ Ví dụ cấu hình broker của lớp trên macOS/Linux; thay địa chỉ b�
 ```bash
 export MQTT_HOST="dia-chi-broker-cua-lop"
 export MQTT_PORT="1883"
-export STUDENT_NAME="Họ tên của bạn"
-export STUDENT_ID="Mã sinh viên của bạn"
+export STUDENT_NAME="Lê Đình Thức"
+export STUDENT_ID="B23DCCN803"
 ```
 
 PowerShell dùng `$env:MQTT_HOST="dia-chi-broker-cua-lop"` và tương tự cho các biến khác. Các biến chỉ áp dụng trong terminal đã đặt chúng. Mọi chương trình hỗ trợ `--host`, `--port`, `--username`, `--password`, `--tls`, `--ca-cert`; dùng `--help` để xem tùy chọn. Khi broker yêu cầu TLS, bật `--tls` và đặt đúng port do broker cung cấp, thường là 8883. Cấu hình tài khoản qua biến môi trường để tránh ghi mật khẩu vào mã nguồn hoặc Git.
 
-## 3. Bài 1 gửi và nhận thông điệp
+## 4. Bài 1 gửi và nhận thông điệp
 
 Terminal A, chạy subscriber trước và chờ dòng `Đang lắng nghe`:
 
@@ -77,7 +85,7 @@ python subscriber_bai1.py
 Terminal B:
 
 ```bash
-python publisher_bai1.py --name "Họ tên của bạn" --student-id "Mã sinh viên của bạn"
+python publisher_bai1.py --name "Lê Đình Thức" --student-id "B23DCCN803"
 ```
 
 Nếu bỏ `--name`/`--student-id` và chưa đặt biến môi trường, chương trình hỏi từ bàn phím. Để gửi nhiều lần:
@@ -99,11 +107,11 @@ Topic: `iot/lab/message`. Subscriber hiển thị topic, lời chào kèm danh t
 ```text
 Nhan duoc message:
 Topic: iot/lab/message
-Payload: Xin chao tu client Python MQTT - Mã sinh viên của bạn - Họ tên của bạn
+Payload: Xin chao tu client Python MQTT - B23DCCN803 - Lê Đình Thức
 Time: 10:15:20
 ```
 
-## 4. Bài 2 mô phỏng cảm biến
+## 5. Bài 2 mô phỏng cảm biến
 
 Terminal A:
 
@@ -159,7 +167,7 @@ Time     | Device       | Temp (C) | Hum (%)  | Cảnh báo
 10:15:20 | sensor02     |     36.1 |     38.7 | CANH BAO: Nhiet do cao; CANH BAO: Do am thap
 ```
 
-## 5. Bài 3 điều khiển đèn
+## 6. Bài 3 điều khiển đèn
 
 Terminal A, chạy thiết bị trước và chờ dòng `Thiết bị light01 sẵn sàng`:
 
@@ -225,7 +233,7 @@ python controller_bai3.py --device-ids light01 fan01 pump01 --commands "light01 
 
 Tất cả thiết bị được chọn phải chạy trước. Có thể chạy một chương trình device cho cả ba, hoặc nhiều terminal với `--device-ids light01`, `--device-ids fan01`, `--device-ids pump01`. Mỗi ID chỉ nên có một mô phỏng đang chạy. ID có 1–64 ký tự, bắt đầu bằng chữ hoặc số, chỉ chứa chữ, số, `_` và `-`.
 
-## 6. Kiểm tra và kết quả
+## 7. Kiểm tra và kết quả
 
 Nhấn `Ctrl+C` để dừng subscriber, sensor, thiết bị và broker. Publisher hữu hạn tự thoát sau khi broker xác nhận các thông điệp QoS 1. Subscribe được đăng ký lại khi client tự kết nối lại.
 
@@ -235,7 +243,7 @@ Chạy kiểm thử tự động; bộ kiểm thử mở broker riêng trên c�
 python -m unittest discover -s tests -v
 ```
 
-## 7. Các file nộp bài
+## 8. Các file nộp bài
 
 - `publisher_bai1.py`, `subscriber_bai1.py`
 - `sensor_publisher_bai2.py`, `monitor_subscriber_bai2.py`
